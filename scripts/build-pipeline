@@ -4,6 +4,6 @@ set -eu -o pipefail
 
 testdir=$(cd "$(dirname "$0")"/../test; pwd)
 
-docker build --tag iheanyi1989/vpc-pipeline-image:v0.1.1 workflows/resource/configure/vpcpipeline/vpc-vpc-pipeline-image
+docker build --tag iheanyi1989/vpc-pipeline-image:v1.0.0 workflows/resource/configure/vpcpipeline/vpc-vpc-pipeline-image
 
-docker push iheanyi1989/vpc-pipeline-image:v0.1.1 
+docker push iheanyi1989/vpc-pipeline-image:v1.0.0
