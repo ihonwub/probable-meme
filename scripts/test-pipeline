@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+scriptsdir=$(cd "$(dirname "$0")"; pwd)
+testdir=$(cd "$(dirname "$0")"/../test; pwd)
+inputDir="$testdir/input"
+outputDir="$testdir/output"
+metadataDir="$testdir/metadata"
+
+$scriptsdir/build-pipeline
+rm -rf $outputDir/*
+
+command=${1:-"entrypoint"}
+
+docker run \
+    --rm \
+    --volume ~/.kube:/root/.kube \
+    --network=host \
+    --volume ${outputDir}:/kratix/output \
+    --volume ${inputDir}:/kratix/input \
+    --volume ${metadataDir}:/kratix/metadata \
+    iheanyi1989/vpc-pipeline-image:v0.1.0  sh -c "$command"
