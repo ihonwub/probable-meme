@@ -1,0 +1,31 @@
+# Promise Template
+
+This Promise was generated with:
+
+```
+kratix init tf-module-promise vpc --module-source https://github.com/terraform-aws-modules/terraform-aws-vpc.git --module-version v5.19.0 --group syntasso.io --kind VPC
+```
+
+## Updating API properties
+
+To update the Promise API, you can use the `kratix update api` command:
+
+```
+kratix update api --property name:string --property region- --kind VPC
+```
+
+## Updating Workflows
+
+To add workflow containers, you can use the `kratix add container` command:
+
+```
+kratix add container resource/configure/pipeline0 --image syntasso/postgres-resource:v1.0.0
+```
+
+## Updating Dependencies
+
+TBD
+# probable-meme
+# probable-meme
+# probable-meme
+# probable-meme
