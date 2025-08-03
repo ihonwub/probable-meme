@@ -26,6 +26,3 @@ kratix add container resource/configure/pipeline0 --image syntasso/postgres-reso
 
 TBD
 # probable-meme
-# probable-meme
-# probable-meme
-# probable-meme
