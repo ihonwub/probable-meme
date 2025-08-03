@@ -1,6 +1,32 @@
-# #!/usr/bin/env sh
+#!/usr/bin/env sh
 
-# set -euxo pipefail
+set -euxo pipefail
+
+name=$(yq '.metadata.name' /kratix/input/object.yaml)
+enable_nat_gateway=$(yq '.spec.enable_nat_gateway' /kratix/input/object.yaml)
+cidr=$(yq '.spec.cidr' /kratix/input/object.yaml)
+
+echo $MODULE_SOURCE
+echo $MODULE_VERSION
+
+
+source="${MODULE_SOURCE:?MODULE_SOURCE not set}"
+version="${MODULE_VERSION:?MODULE_VERSION not set}"
+
+echo "✅ Rendering main.tf:"
+
+cat <<EOF > /kratix/output/main.tf
+module "vpc" {
+  source  = "${source}?ref=${version}"
+
+  name                = "${name}"
+  cidr                = "${cidr}"
+  enable_nat_gateway  = ${enable_nat_gateway}
+}
+EOF
+
+echo "✅ Rendered main.tf:"
+cat /kratix/output/main.tf
 
 # name=$(yq '.metadata.name' /kratix/input/object.yaml)
 # enable_nat_gateway=$(yq '.spec.enable_nat_gateway' /kratix/input/object.yaml)
@@ -32,32 +58,3 @@
 # kubectl replace --filename configmap.yaml --force
 
 
-#!/usr/bin/env sh
-set -euxo pipefail
-
-name=$(yq '.metadata.name' /kratix/input/object.yaml)
-enable_nat_gateway=$(yq '.spec.enable_nat_gateway' /kratix/input/object.yaml)
-cidr=$(yq '.spec.cidr' /kratix/input/object.yaml)
-
-echo $MODULE_SOURCE
-echo $MODULE_VERSION
-
-
-source="${MODULE_SOURCE:?MODULE_SOURCE not set}"
-version="${MODULE_VERSION:?MODULE_VERSION not set}"
-
-echo "✅ Rendering main.tf:"
-
-cat <<EOF > /kratix/output/main.tf
-module "vpc" {
-  source  = "${source}?ref=${version}"
-
-  name                = "${name}"
-  cidr                = "${cidr}"
-  enable_nat_gateway  = ${enable_nat_gateway}
-}
-EOF
-
-
-echo "✅ Rendered main.tf:"
-cat /kratix/output/main.tf

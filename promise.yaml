@@ -1564,7 +1564,7 @@ spec:
                   verbs: ["*"]
                   resources: ["configmaps"]
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v1.0.0
+              - image: iheanyi1989/vpc-pipeline-image:v1.0.1
                 name: vpc-runner
                 command: ["entrypoint"]
                 env:
