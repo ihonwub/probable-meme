@@ -1,7 +1,7 @@
 apiVersion: syntasso.io/v1alpha1
 kind: VPC
 metadata:
-  name: testvpc
+  name: vpc
   namespace: default
 spec:
   cidr: "10.0.0.0/16"
