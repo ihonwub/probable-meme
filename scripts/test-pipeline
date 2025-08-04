@@ -18,6 +18,4 @@ docker run \
     --volume ${outputDir}:/kratix/output \
     --volume ${inputDir}:/kratix/input \
     --volume ${metadataDir}:/kratix/metadata \
-    -e MODULE_SOURCE=https://github.com/terraform-aws-modules/terraform-aws-vpc.git \
-    -e MODULE_VERSION=v5.19.0 \
-    iheanyi1989/vpc-pipeline-image:v1.0.1 sh -c "$command"
+    iheanyi1989/vpc-pipeline-image:v1.0.4 sh -c "$command"

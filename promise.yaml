@@ -1535,24 +1535,19 @@ spec:
     - matchLabels:
         environment: terraform
   workflows:
-    promise: {}
+    promise:
+      configure:
+        - apiVersion: platform.kratix.io/v1alpha1
+          kind: Pipeline
+          metadata:
+            name: modules
+            namespace: default
+          spec:
+            containers:
+              - image: iheanyi1989/vpc-pipeline-image:v1.0.4
+                name: aws
     resource:
       configure:
-        # - apiVersion: platform.kratix.io/v1alpha1
-        #   kind: Pipeline
-        #   metadata:
-        #     creationTimestamp: null
-        #     name: instance-configure
-        #   spec:
-        #     containers:
-        #       - env:
-        #           - name: MODULE_SOURCE
-        #             value: https://github.com/terraform-aws-modules/terraform-aws-vpc.git
-        #           - name: MODULE_VERSION
-        #             value: v5.19.0
-        #         image: ghcr.io/syntasso/kratix-cli/terraform-generate:v0.1.0
-        #         name: terraform-generate
-        #     rbac: {}
         - apiVersion: platform.kratix.io/v1alpha1
           kind: Pipeline
           metadata:
@@ -1564,15 +1559,10 @@ spec:
                   verbs: ["*"]
                   resources: ["configmaps"]
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v1.0.1
+              - image: iheanyi1989/vpc-pipeline-image:v1.0.4
                 name: vpc-runner
                 command: ["entrypoint"]
                 env:
-                  - name: MODULE_SOURCE
-                    value: https://github.com/terraform-aws-modules/terraform-aws-vpc.git
-                  - name: MODULE_VERSION
-                    value: v5.19.0
-
                   - name: AWS_ACCESS_KEY_ID
                     valueFrom:
                       secretKeyRef:
