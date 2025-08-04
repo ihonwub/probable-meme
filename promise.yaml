@@ -1538,21 +1538,21 @@ spec:
     promise: {}
     resource:
       configure:
-        - apiVersion: platform.kratix.io/v1alpha1
-          kind: Pipeline
-          metadata:
-            creationTimestamp: null
-            name: instance-configure
-          spec:
-            containers:
-              - env:
-                  - name: MODULE_SOURCE
-                    value: https://github.com/terraform-aws-modules/terraform-aws-vpc.git
-                  - name: MODULE_VERSION
-                    value: v5.19.0
-                image: ghcr.io/syntasso/kratix-cli/terraform-generate:v0.1.0
-                name: terraform-generate
-            rbac: {}
+        # - apiVersion: platform.kratix.io/v1alpha1
+        #   kind: Pipeline
+        #   metadata:
+        #     creationTimestamp: null
+        #     name: instance-configure
+        #   spec:
+        #     containers:
+        #       - env:
+        #           - name: MODULE_SOURCE
+        #             value: https://github.com/terraform-aws-modules/terraform-aws-vpc.git
+        #           - name: MODULE_VERSION
+        #             value: v5.19.0
+        #         image: ghcr.io/syntasso/kratix-cli/terraform-generate:v0.1.0
+        #         name: terraform-generate
+        #     rbac: {}
         - apiVersion: platform.kratix.io/v1alpha1
           kind: Pipeline
           metadata:
