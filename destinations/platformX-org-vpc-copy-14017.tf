@@ -4,7 +4,7 @@ module "platformX-org-vpc-copy-14017_vpc" {
 
   name                = "vpc-copy"
   cidr                = "10.0.0.0/16"
-  enable_nat_gateway  = true
+  enable_nat_gateway  = false
 }
 
 output "platformX-org-vpc-copy-14017-vpc_id" {
@@ -12,5 +12,5 @@ output "platformX-org-vpc-copy-14017-vpc_id" {
 }
 
 output "platformX-org-vpc-copy-14017-vpc_name" {
-  value = module.platformX-org-vpc-copy-14017_vpc.name
+  value = module.platformX-org-vpc-copy-14017_vpc.vpc_name
 }
