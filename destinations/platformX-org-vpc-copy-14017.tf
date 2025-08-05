@@ -12,5 +12,5 @@ output "platformX-org-vpc-copy-14017-vpc_id" {
 }
 
 output "platformX-org-vpc-copy-14017-vpc_name" {
-  value = module.platformX-org-vpc-copy-14017_vpc.vpc_name
+  value = module.platformX-org-vpc-copy-14017_vpc.name
 }
