@@ -4,8 +4,8 @@ module "platformX-org-vpc-example-5267_vpc" {
 
   name                = "platformX-org-vpc-example-5267"
   cidr                = "10.0.0.0/16"
-  enable_nat_gateway  = true
-  create_igw         = true
+  enable_nat_gateway  = false
+  create_igw         = false
 }
 
 output "platformX-org-vpc-example-5267-vpc_id" {
