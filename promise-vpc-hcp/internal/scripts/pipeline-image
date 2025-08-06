@@ -5,7 +5,7 @@ set -euo pipefail
 promise_dir="$( cd $(dirname $0)/../.. && pwd)"
 declare -a args=( "$@" )
 
-pipeline_image="iheanyi1989/vpc-pipeline-image:v2.0.6"
+pipeline_image="iheanyi1989/vpc-pipeline-image:v2.0.7"
 pipeline_dir=${promise_dir}/internal/configure-pipeline""
 
 set -- "${args[@]}"
