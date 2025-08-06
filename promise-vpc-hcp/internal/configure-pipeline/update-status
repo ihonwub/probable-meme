@@ -11,11 +11,11 @@ sleep_seconds=45
 vpc_id=""
 
 while [ "$attempts" -lt "$max_attempts" ]; do
-  echo "🔁 Attempt $(($attempts + 1)) to find VPC named: $name"
+  echo "🔁 Attempt $(($attempts + 1)) to find VPC named: $vpcName"
   
   vpc_id=$(aws ec2 describe-vpcs \
     --region "$region" \
-    --filters "Name=tag:Name,Values=$name" \
+    --filters "Name=tag:Name,Values=$vpcName" \
     --query "Vpcs[0].VpcId" \
     --output text) || true
 
@@ -26,10 +26,10 @@ while [ "$attempts" -lt "$max_attempts" ]; do
     cat <<EOF > /kratix/metadata/status.yaml
 ready: "True"
 vpcId: "$vpc_id"
-vpcName: "$name"
+vpcName: "$vpcName"
 EOF
 
-    echo "✅ VPC $name is ready with ID: $vpc_id"
+    echo "✅ VPC $vpcName is ready with ID: $vpc_id"
     exit 0
   fi
 
@@ -38,5 +38,5 @@ EOF
   sleep "$sleep_seconds"
 done
 
-echo "❌ Failed to find VPC with Name tag: $name after $max_attempts attempts"
+echo "❌ Failed to find VPC with Name tag: $vpcName after $max_attempts attempts"
 exit 1
