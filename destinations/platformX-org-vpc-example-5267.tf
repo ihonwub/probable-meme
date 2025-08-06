@@ -1,0 +1,17 @@
+module "platformX-org-vpc-example-5267_vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "6.0.1"
+
+  name                = "platformX-org-vpc-example-5267"
+  cidr                = "10.0.0.0/16"
+  enable_nat_gateway  = true
+  create_igw         = true
+}
+
+output "platformX-org-vpc-example-5267-vpc_id" {
+  value = module.platformX-org-vpc-example-5267_vpc.vpc_id
+}
+
+output "platformX-org-vpc-example-5267-vpc_name" {
+  value = module.platformX-org-vpc-example-5267_vpc.name
+}
