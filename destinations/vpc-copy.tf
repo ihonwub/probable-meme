@@ -4,7 +4,7 @@ module "vpc-copy_vpc" {
 
   name                = "vpc-copy"
   cidr                = "10.0.0.0/16"
-  enable_nat_gateway  = true
+  enable_nat_gateway  = false
 }
 
 output "vpc-copy-vpc_id" {
