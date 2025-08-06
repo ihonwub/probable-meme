@@ -1,2 +1,2 @@
 files:
-- platformX-org-vpc-copy-5744.tf
+- vpc-copy.tf
