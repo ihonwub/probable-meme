@@ -1554,7 +1554,7 @@ spec:
             namespace: default
           spec:
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.6
                 name: aws
     resource:
       configure:
@@ -1569,7 +1569,7 @@ spec:
                   verbs: ["*"]
                   resources: ["configmaps"]
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.6
                 name: reconciler
                 env:
                   - name: ORG_NAME
@@ -1590,7 +1590,7 @@ spec:
             name: wait
           spec:
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.6
                 name: status-updater
                 command: ["update-status"]
                 env:
@@ -1613,7 +1613,7 @@ spec:
             name: destroy
           spec:
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.6
                 name: vpc-destroyer
                 command: ["destroy"]
 # apiVersion: platform.kratix.io/v1alpha1
