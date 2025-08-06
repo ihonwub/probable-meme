@@ -4,7 +4,8 @@ set -euo pipefail
 echo "🧨 Starting resource.delete..."
 
 # Read the VPC name from status
-vpcName=$(yq eval '.status.vpcName // ""' /kratix/input/object.yaml)
+vpcName=$(yq '.status.vpcName' /kratix/input/object.yaml)
+region="us-east-1"
 
 if [ -z "$vpcName" ]; then
   echo "❌ No VPC name found in status — cannot continue with delete."

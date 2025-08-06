@@ -1570,7 +1570,7 @@ spec:
                   resources: ["configmaps"]
             containers:
               - image: iheanyi1989/vpc-pipeline-image:v2.0.5
-                name: vpc-runner
+                name: reconciler
                 env:
                   - name: ORG_NAME
                     value: platformX

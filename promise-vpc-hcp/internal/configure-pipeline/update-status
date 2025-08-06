@@ -2,7 +2,7 @@
 set -euo pipefail
 echo "🟢 Running update-status script..."
 
-name=$(yq '.metadata.name' /kratix/input/object.yaml)
+vpcName=$(yq '.status.vpcName' /kratix/input/object.yaml)
 region="us-east-1"
 
 attempts=0
