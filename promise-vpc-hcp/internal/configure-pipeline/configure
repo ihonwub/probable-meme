@@ -21,7 +21,7 @@ providedName="$(yq eval '.metadata.name' /kratix/input/object.yaml)"
 enableNatGateway="$(yq eval '.spec.enable_nat_gateway' /kratix/input/object.yaml)"
 cidr="$(yq eval '.spec.cidr' /kratix/input/object.yaml)"
 create_igw="$(yq eval '.spec.create_igw // false' /kratix/input/object.yaml)"
-tags_json=$(yq eval -o=json '.spec.tags // {}' /kratix/input/object.yaml)
+tags_block=$(yq eval -o=json '.spec.tags // {}' /kratix/input/object.yaml | jq -r 'to_entries | map("    \(.key) = \"\(.value)\"") | join("\n")')
 
 # Check if this is a re-run (e.g. after an update)
 vpcName=$(yq eval '.status.vpcName // ""' /kratix/input/object.yaml)
@@ -40,7 +40,9 @@ module "${vpcName}_vpc" {
   cidr                = "${cidr}"
   enable_nat_gateway  = ${enableNatGateway}
   create_igw         = ${create_igw}
-  tags                = jsondecode("${tags_json}")
+  tags                = {
+    ${tags_block}
+  }
 }
 
 output "${vpcName}-vpc_id" {
