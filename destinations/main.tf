@@ -1,3 +1,6 @@
-output "promise-configure" {
-  value = "some-value"
+terraform {
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
