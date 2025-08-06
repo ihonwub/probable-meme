@@ -1,29 +1,42 @@
 #!/usr/bin/env sh
-set -euxo pipefail
+set -euo pipefail
 echo "🟢 Running update-status script..."
 
 name=$(yq '.metadata.name' /kratix/input/object.yaml)
 region="us-east-1"
-vpc_id="debug"
-# # Get VPC ID based on tag "Name"
-# vpc_id=$(aws ec2 describe-vpcs \
-#   --region "$region" \
-#   --filters "Name=tag:Name,Values=$name" \
-#   --query "Vpcs[0].VpcId" \
-#   --output text)
 
-# # Check for valid result
-# sleep 30
-# if [ "$vpc_id" = "None" ]; then
-#   echo "❌ VPC not found with Name tag: $name"
-#   exit 1
-# fi
+attempts=0
+max_attempts=6
+sleep_seconds=45
+vpc_id=""
 
-# Create status.yaml to mark the resource ready
-cat <<EOF > /kratix/metadata/status.yaml
+while [ "$attempts" -lt "$max_attempts" ]; do
+  echo "🔁 Attempt $(($attempts + 1)) to find VPC named: $name"
+  
+  vpc_id=$(aws ec2 describe-vpcs \
+    --region "$region" \
+    --filters "Name=tag:Name,Values=$name" \
+    --query "Vpcs[0].VpcId" \
+    --output text) || true
+
+  if [ "$vpc_id" != "None" ] && [ -n "$vpc_id" ]; then
+    echo "✅ VPC found: $vpc_id"
+    
+    # Create status.yaml to mark the resource ready
+    cat <<EOF > /kratix/metadata/status.yaml
 ready: "True"
-# vpcId: "$vpc_id"
+vpcId: "$vpc_id"
 vpcName: "$name"
 EOF
 
-echo "✅ VPC $name is ready with ID: $vpc_id"
+    echo "✅ VPC $name is ready with ID: $vpc_id"
+    exit 0
+  fi
+
+  echo "⚠️ VPC not found yet. Retrying in $sleep_seconds seconds..."
+  attempts=$(($attempts + 1))
+  sleep "$sleep_seconds"
+done
+
+echo "❌ Failed to find VPC with Name tag: $name after $max_attempts attempts"
+exit 1

@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+set -euo pipefail
+
+echo "🧨 Starting resource.delete..."
+
+# Read the VPC name from status
+vpcName=$(yq eval '.status.vpcName // ""' /kratix/input/object.yaml)
+
+if [ -z "$vpcName" ]; then
+  echo "❌ No VPC name found in status — cannot continue with delete."
+  exit 0  # Use exit 0 to allow graceful deletion when no status is present
+fi
+
+# NOTE: Kratix deletes the relevant .tf file automatically.
+# You don't need to write to /kratix/output — it will be ignored.
+echo "ℹ️ Kratix will delete the Terraform config for VPC: ${vpcName}"
+
+# Optional: Add logging or side-effect cleanup here
+# e.g., notify external systems, delete out-of-band resources, etc.
+
+echo "✅ resource.delete complete."

@@ -29,7 +29,7 @@ docker run \
   --volume "$metadataDir:/kratix/metadata" \
   -e ORG_NAME="platformx" \
   -e KRATIX_WORKFLOW_TYPE="no-promise" \
-  iheanyi1989/vpc-pipeline-image:v2.0.3
+  iheanyi1989/vpc-pipeline-image:v2.0.5
 
 else
 docker run \
@@ -41,6 +41,6 @@ docker run \
   --volume "$metadataDir:/kratix/metadata" \
   -e ORG_NAME="platformx" \
   -e KRATIX_WORKFLOW_TYPE="no-promise" \
-  iheanyi1989/vpc-pipeline-image:v2.0.3 \
+  iheanyi1989/vpc-pipeline-image:v2.0.5 \
   "$command"
 fi

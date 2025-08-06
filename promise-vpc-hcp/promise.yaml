@@ -1554,14 +1554,14 @@ spec:
             namespace: default
           spec:
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.3
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
                 name: aws
     resource:
       configure:
         - apiVersion: platform.kratix.io/v1alpha1
           kind: Pipeline
           metadata:
-            name: vpcpipeline
+            name: configure
           spec:
             rbac:
               permissions:
@@ -1569,29 +1569,28 @@ spec:
                   verbs: ["*"]
                   resources: ["configmaps"]
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.3
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
                 name: vpc-runner
-                # command: ["configure"]
                 env:
                   - name: ORG_NAME
                     value: platformX
-                  - name: AWS_ACCESS_KEY_ID
-                    valueFrom:
-                      secretKeyRef:
-                        name: aws-creds
-                        key: AWS_ACCESS_KEY_ID
-                  - name: AWS_SECRET_ACCESS_KEY
-                    valueFrom:
-                      secretKeyRef:
-                        name: aws-creds
-                        key: AWS_SECRET_ACCESS_KEY
+                #   - name: AWS_ACCESS_KEY_ID
+                #     valueFrom:
+                #       secretKeyRef:
+                #         name: aws-creds
+                #         key: AWS_ACCESS_KEY_ID
+                #   - name: AWS_SECRET_ACCESS_KEY
+                #     valueFrom:
+                #       secretKeyRef:
+                #         name: aws-creds
+                #         key: AWS_SECRET_ACCESS_KEY
         - apiVersion: platform.kratix.io/v1alpha1
           kind: Pipeline
           metadata:
             name: wait
           spec:
             containers:
-              - image: iheanyi1989/vpc-pipeline-image:v2.0.3
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
                 name: status-updater
                 command: ["update-status"]
                 env:
@@ -1607,6 +1606,16 @@ spec:
                       secretKeyRef:
                         name: aws-creds
                         key: AWS_SECRET_ACCESS_KEY
+      delete:
+        - apiVersion: platform.kratix.io/v1alpha1
+          kind: Pipeline
+          metadata:
+            name: destroy
+          spec:
+            containers:
+              - image: iheanyi1989/vpc-pipeline-image:v2.0.5
+                name: vpc-destroyer
+                command: ["destroy"]
 # apiVersion: platform.kratix.io/v1alpha1
 # kind: Promise
 # metadata:

@@ -13,6 +13,7 @@ RUN mkdir -p /scripts
 # Copy and fix script line endings
 COPY configure /scripts/configure
 COPY update-status /scripts/update-status
+COPY destroy /scripts/destroy
 RUN dos2unix /scripts/* && chmod +x /scripts/*
 
 # Set PATH and entrypoint
