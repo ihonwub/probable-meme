@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+set -euxo pipefail
+echo "🟢 Running update-status script..."
+
+name=$(yq '.metadata.name' /kratix/input/object.yaml)
+region="us-east-1"
+
+# Get VPC ID based on tag "Name"
+vpc_id=$(aws ec2 describe-vpcs \
+  --region "$region" \
+  --filters "Name=tag:Name,Values=$name" \
+  --query "Vpcs[0].VpcId" \
+  --output text)
+
+# Check for valid result
+sleep 30
+if [ "$vpc_id" = "None" ]; then
+  echo "❌ VPC not found with Name tag: $name"
+  exit 1
+fi
+
+# Create status.yaml to mark the resource ready
+cat <<EOF > /kratix/metadata/status.yaml
+ready: "True"
+vpcId: "$vpc_id"
+vpcName: "$name"
+EOF
+
+echo "✅ VPC $name is ready with ID: $vpc_id"

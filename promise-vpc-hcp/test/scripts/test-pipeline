@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Get absolute paths
+scriptsdir=$(cd "$(dirname "$0")"; pwd)
+testdir=$(cd "$scriptsdir/.."; pwd)
+inputDir="$testdir/input"
+outputDir="$testdir/output"
+metadataDir="$testdir/metadata"
+pipelineDir="$testdir/../internal/configure-pipeline"
+
+# Ensure output directory exists and is clean
+mkdir -p "$outputDir"
+rm -rf "$outputDir"/*
+
+# Optional command (defaults to 'entrypoint')
+command=${1:-}
+
+
+# Run the Docker container using mounted test directories
+if [ -z "$command" ]; then
+docker run \
+  --rm \
+  --network=host \
+  --volume "$HOME/.kube:/root/.kube" \
+  --volume "$inputDir:/kratix/input" \
+  --volume "$outputDir:/kratix/output" \
+  --volume "$metadataDir:/kratix/metadata" \
+  -e ORG_NAME="platformx" \
+  -e KRATIX_WORKFLOW_TYPE="no-promise" \
+  iheanyi1989/vpc-pipeline-image:v2.0.3
+
+else
+docker run \
+  --rm \
+  --network=host \
+  --volume "$HOME/.kube:/root/.kube" \
+  --volume "$inputDir:/kratix/input" \
+  --volume "$outputDir:/kratix/output" \
+  --volume "$metadataDir:/kratix/metadata" \
+  -e ORG_NAME="platformx" \
+  -e KRATIX_WORKFLOW_TYPE="no-promise" \
+  iheanyi1989/vpc-pipeline-image:v2.0.3 \
+  "$command"
+fi

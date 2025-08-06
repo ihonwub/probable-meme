@@ -1,1 +1,4 @@
 gitstatestore.yaml
+test/*
+scripts/*
+kind-config.yaml

@@ -1,0 +1,9 @@
+apiVersion: syntasso.io/v1alpha1
+kind: VPC
+metadata:
+  name: vpc-copy
+  namespace: default
+  finalizers: []
+spec:
+  cidr: "10.0.0.0/16"
+  enable_nat_gateway: true
