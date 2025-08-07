@@ -2,23 +2,32 @@
 
 set -euo pipefail
 
-promise_dir="$( cd $(dirname $0)/../.. && pwd)"
-declare -a args=( "$@" )
+# Resolve base promise directory
+promise_dir="$(cd "$(dirname "$0")/../.." && pwd)"
+declare -a args=("$@")
 
-pipeline_image="iheanyi1989/vpc-pipeline-image:v2.0.7"
-pipeline_dir=${promise_dir}/internal/configure-pipeline""
+# Define image name and tags
+image_base="iheanyi1989/vpc-pipeline-image"
+image_version="v2.0.7"
+pipeline_image="${image_base}:${image_version}"
+pipeline_latest="${image_base}:latest"
+pipeline_dir="${promise_dir}/internal/configure-pipeline"
 
+# Main command handler
 set -- "${args[@]}"
 while [ $# -gt 0 ]; do
     case "$1" in
         build)
             docker build \
                 --tag "${pipeline_image}" \
-                --platform linux/$(uname -m) \
-                ${pipeline_dir} ;;
+                --tag "${pipeline_latest}" \
+                --platform "linux/$(uname -m)" \
+                "${pipeline_dir}"
+            ;;
 
         load)
-            kind load docker-image "${pipeline_image}" --name ops ;;
+            kind load docker-image "${pipeline_image}" --name ops
+            ;;
 
         push)
             if ! docker buildx ls | grep -q "kratix-image-builder"; then
@@ -26,20 +35,27 @@ while [ $# -gt 0 ]; do
             fi
             docker buildx use kratix-image-builder
             platform="${BUILD_PLATFORM:-linux/arm64,linux/amd64}"
+
             docker buildx build \
                 --tag "${pipeline_image}" \
-                --platform $platform \
+                --tag "${pipeline_latest}" \
+                --platform "${platform}" \
                 --push \
-                "${pipeline_dir}" ;;
+                "${pipeline_dir}"
+            ;;
 
         rmi)
-            docker rmi --force "${pipeline_image}" ;;
+            docker rmi --force "${pipeline_image}" "${pipeline_latest}" || true
+            ;;
 
         pull)
-            docker pull "${pipeline_image}" ;;
+            docker pull "${pipeline_image}"
+            docker pull "${pipeline_latest}"
+            ;;
 
         *)
-            echo "unknown command $1"
+            echo "❌ Unknown command: $1"
+            echo "Usage: $0 [build|load|push|rmi|pull]"
             exit 1
             ;;
     esac
