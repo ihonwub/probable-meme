@@ -10,6 +10,7 @@ module "platformX-org-vpc-example-30149_vpc" {
         Environment = "dev"
     Owner = "DevOps"
     Purpose = "test-updates"
+    Team = "Platform-Engineering"
   }
 }
 
