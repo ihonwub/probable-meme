@@ -8,9 +8,10 @@ module "platformX-org-vpc-example-30149_vpc" {
   create_igw         = false
   tags                = {
         Environment = "dev"
-    Owner = "DevOps"
+    Owner = "@ihonwub"
+    Project = "promise-vpc-hcp"
     Purpose = "test-updates"
-    Team = "Platform-Engineering"
+    Team = "Platform Engineering"
   }
 }
 
