@@ -8,7 +8,7 @@ spec:
   path: destinations/
   authMethod: accessKey
   insecure: false
-  bucketName: kratixstatestore41222
+  bucketName: kratixstatestore41222xxxx
   secretRef:
     name: kratix-creds
     namespace: practice
@@ -25,5 +25,5 @@ spec:
   stateStoreRef:
     name: kratixs3statestore
     kind: BucketStateStore
-  path: terraform-cloud/ # final S3 prefix: s3://kratixstatestore41222/destinations/terraform-cloud/
+  path: terraform-cloud/ # final S3 prefix: s3://kratixstatestore41222xxxx/destinations/terraform-cloud/
   strictMatchLabels: true

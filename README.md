@@ -61,7 +61,7 @@ kubectl apply -f promise-vpc-hcp/example-resource.yaml
 **Destination**: Defines where resources are deployed and which state store to use
 
 The Destination links your VPC resources to a specific state store:
-- S3 Destination stores state in `s3://kratixstatestore41222/destinations/terraform-cloud/`
+- S3 Destination stores state in `s3://kratixstatestore41222xxxx/destinations/terraform-cloud/`
 - Git Destination stores state in the `probable-meme` repo under `destinations/terraform-cloud/`
 
 ## Testing and Local Development
