@@ -1607,6 +1607,7 @@ spec:
                         name: aws-creds
                         key: AWS_SECRET_ACCESS_KEY
 #### TODO: Research on delete workflow #####
+
 # delete:
 #   - apiVersion: platform.kratix.io/v1alpha1
 #     kind: Pipeline
