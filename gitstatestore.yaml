@@ -20,7 +20,7 @@ metadata:
     environment: terraform
 spec:
   strictMatchLabels: true
-  path: /
+  path: terraform-cloud/
   filepath:
     mode: none
   stateStoreRef:

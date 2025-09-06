@@ -1606,16 +1606,20 @@ spec:
                       secretKeyRef:
                         name: aws-creds
                         key: AWS_SECRET_ACCESS_KEY
-      delete:
-        - apiVersion: platform.kratix.io/v1alpha1
-          kind: Pipeline
-          metadata:
-            name: destroy
-          spec:
-            containers:
-              - image: iheanyi1989/vpc-pipeline-image:latest
-                name: vpc-destroyer
-                command: ["destroy"]
+#### TODO: Research on delete workflow #####
+# delete:
+#   - apiVersion: platform.kratix.io/v1alpha1
+#     kind: Pipeline
+#     metadata:
+#       name: destroy
+#     spec:
+#       containers:
+#         - image: iheanyi1989/vpc-pipeline-image:latest
+#           name: vpc-destroyer
+#           command: ["destroy"]
+
+##### END ######
+
 # apiVersion: platform.kratix.io/v1alpha1
 # kind: Promise
 # metadata:
