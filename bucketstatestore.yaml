@@ -1,0 +1,29 @@
+---
+apiVersion: platform.kratix.io/v1alpha1
+kind: BucketStateStore
+metadata:
+  name: kratixs3statestore
+spec:
+  endpoint: s3.us-east-1.amazonaws.com
+  path: destinations/
+  authMethod: accessKey
+  insecure: false
+  bucketName: kratixstatestore41222
+  secretRef:
+    name: kratix-creds
+    namespace: practice
+
+---
+apiVersion: platform.kratix.io/v1alpha1
+kind: Destination
+metadata:
+  name: terraform-cloud
+  namespace: kratix-platform-system
+  labels:
+    environment: terraform
+spec:
+  stateStoreRef:
+    name: kratixs3statestore
+    kind: BucketStateStore
+  path: terraform-cloud/ # final S3 prefix: s3://kratixstatestore41222/destinations/terraform-cloud/
+  strictMatchLabels: true

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-debug
+  namespace: practice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s3-debug
+  template:
+    metadata:
+      labels:
+        app: s3-debug
+    spec:
+      containers:
+        - name: awscli
+          image: amazon/aws-cli
+          command: ["sh", "-c", "sleep 3600"]
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: kratix-creds
+                  key: accessKeyID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kratix-creds
+                  key: secretAccessKey
+            - name: AWS_REGION
+              value: us-east-1

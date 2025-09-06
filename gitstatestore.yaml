@@ -1,0 +1,28 @@
+apiVersion: platform.kratix.io/v1alpha1
+kind: GitStateStore
+metadata:
+  name: probable-meme
+spec:
+  authMethod: basicAuth
+  branch: feature/structure
+  path: destinations/
+  secretRef:
+    name: git-creds
+    namespace: practice
+  url: https://github.com/ihonwub/probable-meme.git
+
+---
+apiVersion: platform.kratix.io/v1alpha1
+kind: Destination
+metadata:
+  name: tf-cloud
+  labels:
+    environment: terraform
+spec:
+  strictMatchLabels: true
+  path: /
+  filepath:
+    mode: none
+  stateStoreRef:
+    kind: GitStateStore
+    name: probable-meme
